@@ -1,7 +1,7 @@
 /**
  * Overmind
  * Copyright 2014 Dave Geddes @geddski
- * Version 2.0.1
+ * Version 2.0.2
  */
 
 var overmind = angular.module('overmind', ['ngRoute']);
@@ -176,12 +176,13 @@ angular.module('overmind').directive('overmind', ["$location", "$route", functio
         var link = $compile(currentView.parent().contents());
 
         currentViewScope = currentAppScope.$new();
+        overmind.shared.currentViewScope = currentViewScope;
         if (currentRoute.controller) {
           locals.$scope = currentViewScope;
           var $controller = currentAppInjector.get('$controller');
           var controller = $controller(currentRoute.controller, locals);
           if (currentRoute.controllerAs) {
-            currentViewScope[current.controllerAs] = controller;
+            currentViewScope[currentRoute.controllerAs] = controller;
           }
           currentView.data('$ngControllerController', controller);
           currentView.children().data('$ngControllerController', controller);
